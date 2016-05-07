@@ -3,7 +3,8 @@ from collections import defaultdict
 import nltk
 import argparse
 from nltk import stem
-from nltk import word_tokenize
+from nltk import RegexpTokenizer
+from nltk.corpus import stopwords
 import pprint
 import sys
 
@@ -56,31 +57,44 @@ def pformat(wdlst):
     print wdlst[:CUTOFF]
 
 
+def process_words(words):
+    allwd = basecnt(words)
+    print "all words in the text, without stemming"
+    pformat(allwd)
+
+    print "words in text with snow ball stemming" 
+    sbwd = sbstem(words)
+    pformat(sbwd)
+
+    print "words in text with lancasterstemming" 
+    lcwd = lcstem(words)
+    pformat(lcwd)
+
+def filter_stopwords(words):
+    important_words = filter(lambda x: x not in stopwords.words('english'), words)
+    return important_words
+
+#Parsing the command line arguments for the filename 
 parser = argparse.ArgumentParser(description = 'Process a text file.')
-
 parser.add_argument('filename', type=str, help='pathname to that file')
-
+parser.add_argument('cut_off', type=int, help='cut off value for the list output')
 args = parser.parse_args()
-
 print args
 
 filename = args.filename
+#open the file 
 pp = open(filename)
-
+CUTOFF = args.cut_off
 # string of the text 
 text = pp.read()
-
 # the list of words 
-tokens = word_tokenize(text)
+tokenizer = RegexpTokenizer(r'\w+')
+tokens = tokenizer.tokenize(text)
 
-allwd = basecnt(tokens)
-print "all words in the text, without stemming"
-pformat(allwd)
+print "Without filtering out the stop words"
+process_words(tokens)
 
-print "words in text with snow ball stemming" 
-sbwd = sbstem(tokens)
-pformat(sbwd)
+print "With stop words filtering" 
 
-print "words in text with lancasterstemming" 
-lcwd = lcstem(tokens)
-pformat(lcwd)
+fil_token = filter_stopwords(tokens)
+process_words(fil_token)
