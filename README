@@ -1,0 +1,21 @@
+This is a program that reads a txt file of a book and analyze the number of
+unique words in a text file. 
+
+The program takes two argument, first one is the pathname of the text, second
+is the integer number of the cut off point for the list of words outputed 
+
+example for running this script:
+
+    $ python stemcompare.py pride_and_prejudice.txt 30
+
+assume that you have pride_and_prejudice.txt in your current directory
+
+This program first compare words in the file without stemming, with snowball
+stemming, and with lancaster stemming
+
+It then try to filter out the stopwords from the list of words then repeat 
+the stemming process again. 
+
+With these output, user can get a more direct understanding of the text and
+how the different types of stemming algorithms affect the output of analyzing
+texts.
