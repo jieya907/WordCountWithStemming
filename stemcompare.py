@@ -1,8 +1,9 @@
-from collections import defautldict
+from collections import defaultdict
 import nltk
 import argparse
 from nltk import stem
 from nltk import word_tokenize
+import pprint
 
 lc = stem.lancaster.LancasterStemmer()
 
@@ -14,6 +15,7 @@ args = parser.parse_args()
 
 print args
 
+filename = args.filename
 pp = open(filename)
 
 text = pp.read()
@@ -27,4 +29,4 @@ lcct = defaultdict(int)
 for j in lctk:
     lcct[j] += 1
 
-pprint.pprint(lcct)
+pprint.pprint(dict(lcct))
