@@ -48,6 +48,13 @@ def sbstem(words):
     return basecnt(lctk)
 
 
+def pformat(wdlst):
+    s = "There are " + str(len(wdlst)) + " unique words in " + filename
+    print s
+    s1 = "The most frequent " + str(CUTOFF) + " words are "
+    print s1
+    print wdlst[:CUTOFF]
+
 
 parser = argparse.ArgumentParser(description = 'Process a text file.')
 
@@ -68,13 +75,12 @@ tokens = word_tokenize(text)
 
 allwd = basecnt(tokens)
 print "all words in the text, without stemming"
-print allwd[:CUTOFF] 
-#
+pformat(allwd)
+
 print "words in text with snow ball stemming" 
 sbwd = sbstem(tokens)
-print sbwd[:CUTOFF]
+pformat(sbwd)
 
 print "words in text with lancasterstemming" 
 lcwd = lcstem(tokens)
-print lcwd[:CUTOFF]
-
+pformat(lcwd)
